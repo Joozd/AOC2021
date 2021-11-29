@@ -1,9 +1,9 @@
-package day0
+package day1
 
 import common.Solution
 
-class Day0: Solution {
-    override val day = 0
+class Day1: Solution {
+    override val day = 1
 
     override fun answer1(): Any = readInput()
 
