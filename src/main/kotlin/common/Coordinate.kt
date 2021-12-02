@@ -21,5 +21,5 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
      */
     override fun compareTo(other: Coordinate): Int = if (y == other.y) x-other.x else y - other.y
 
-    operator fun plus(other: Coordinate) = Coordinate (x+other.x, y+other.y)
+    operator fun plus(other: Vector) = Coordinate (x+other.directionX, y+other.directionY)
 }

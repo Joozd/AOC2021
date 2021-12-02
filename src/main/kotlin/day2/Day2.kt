@@ -2,6 +2,7 @@ package day2
 
 import common.Coordinate
 import common.Solution
+import common.Vector
 
 class Day2: Solution {
     override val day = 2
@@ -29,9 +30,9 @@ class Day2: Solution {
     private fun Coordinate.updatePos(line: String): Coordinate {
         val amount = line.lineValue()
         return when (line[0]) {
-            'u' -> Coordinate(0, amount * -1) + this
-            'd' -> Coordinate(0, amount) + this
-            'f' -> Coordinate(amount, 0) + this
+            'u' -> this + Vector(0, amount * -1)
+            'd' -> this + Vector(0, amount)
+            'f' -> this + Vector(amount, 0)
             else -> error("error")
         }
     }
@@ -47,9 +48,9 @@ class Day2: Solution {
     }
 
     private fun Coordinate.moveWithAim(line: String, aim: Int): Coordinate{
-        val amount = line.lineValue()
         if (line.first() != 'f') return this
-        return Coordinate(amount, amount* aim) + this
+        val amount = line.lineValue()
+        return this + Vector(amount, amount* aim)
     }
 
     private fun String.lineValue(): Int = last().toString().toInt()
