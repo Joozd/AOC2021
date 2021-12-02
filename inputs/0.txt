@@ -1,4 +1,0 @@
-This is the input for day 0
-Todays challnge:
-1: display this text
-2: Display only the first line of this text
