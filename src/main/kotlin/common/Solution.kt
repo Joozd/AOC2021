@@ -17,14 +17,23 @@ interface Solution {
         println("Answers for day $day:")
         val a1: Any?
         val a2: Any?
+        val preparationDuration = measureNanoTime { prepare() }
         val duration1 = measureNanoTime { a1 = answer1() }
         println("1:\n$a1\n\n")
         val duration2 = measureNanoTime { a2 = answer2() }
         println("2:\n$a2\n\n")
-        val durationTotal = duration1 + duration2
-        println("time 1:     ${duration1/1000000.toFloat()} ms")
-        println("time 2:     ${duration2/1000000.toFloat()} ms")
-        println("total time: ${durationTotal/1000000.toFloat()} ms")
+        val durationTotal = preparationDuration +duration1 + duration2
+        println("Preparation: ${preparationDuration/1000000.toFloat()} ms")
+        println("time 1:      ${duration1/1000000.toFloat()} ms")
+        println("time 2:      ${duration2/1000000.toFloat()} ms")
+        println("total time:  ${durationTotal/1000000.toFloat()} ms")
+    }
+
+    /**
+     * This will run before answers
+     */
+    fun prepare(){
+
     }
 
     fun inputLines() = readInput().lines()
