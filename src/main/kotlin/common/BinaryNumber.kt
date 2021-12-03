@@ -2,7 +2,9 @@ package common
 
 class BinaryNumber(private val bits: List<Boolean>): Number(), Comparable<BinaryNumber> {
     constructor(bitsString: String): this(bitsString.map { it == '1' })
-    constructor(value: Long): this(value.toString(2))
+    constructor(value: Long): this(value.toString(2).padStart(Long.SIZE_BITS, '0'))
+    constructor(value: Int): this(value.toString(2).padStart(Int.SIZE_BITS, '0'))
+    constructor(value: Short): this(value.toString(2).padStart(Short.SIZE_BITS, '0'))
 
     override fun toByte(): Byte = getValue().toByte()
 
