@@ -2,6 +2,7 @@ package common
 
 class BinaryNumber(private val bits: List<Boolean>): Number(), Comparable<BinaryNumber> {
     constructor(bitsString: String): this(bitsString.map { it == '1' })
+    constructor(value: Long): this(value.toString(2))
 
     override fun toByte(): Byte = getValue().toByte()
 
@@ -19,14 +20,20 @@ class BinaryNumber(private val bits: List<Boolean>): Number(), Comparable<Binary
 
     override fun toString(): String = bits.map { if (it) '1' else '0' }.joinToString("")
 
+     fun toString(radix: Int): String = when(radix){
+         2 -> this.toString()
+         else -> getValue().toString(radix)
+    }
+
     override fun compareTo(other: BinaryNumber): Int = getValue().compareTo(other.toLong())
 
     fun getOrNull(index:Int) = if (index in bits.indices) bits[index] else null
 
     operator fun get(index: Int) = bits[index]
 
-
     operator fun not(): BinaryNumber = BinaryNumber(bits.map {!it})
+
+    operator fun times(other: Number) = BinaryNumber(getValue() * other.toLong())
 
     infix fun and(other: BinaryNumber): BinaryNumber {
         val size = maxOf(this.bits.size, other.bits.size)
