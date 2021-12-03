@@ -30,11 +30,11 @@ class Day3: Solution {
 
     private fun getGammaRate(inputBinaries: List<BinaryNumber>): BinaryNumber = BinaryNumber(
         inputBinaries.first().indices.map{ bit ->
-            inputBinaries.mostCommonBit(bit)
+            inputBinaries.mostCommonBitAtIndex(bit)
         })
 
     private fun getOxyRate(binaryNumbers: List<BinaryNumber>, index: Int = 0): BinaryNumber {
-        val wantedValue = binaryNumbers.mostCommonBit(index)
+        val wantedValue = binaryNumbers.mostCommonBitAtIndex(index)
         val result = binaryNumbers.findMatchingNumbers(index, wantedValue)
         if (result.size > 1) return getOxyRate(result, index + 1)
         return result.first()
@@ -57,7 +57,7 @@ class Day3: Solution {
     private fun List<BinaryNumber>.relevantBitsOnly(bit: Int) =
         map { it[bit] }
 
-    private fun List<BinaryNumber>.mostCommonBit(bit: Int) =
+    private fun List<BinaryNumber>.mostCommonBitAtIndex(bit: Int) =
         mostCommon(relevantBitsOnly(bit))
 
     /**
@@ -70,6 +70,6 @@ class Day3: Solution {
     }
 
     private fun List<BinaryNumber>.leastCommonBit(bit: Int) =
-        !mostCommonBit(bit)
+        !mostCommonBitAtIndex(bit)
 }
 
