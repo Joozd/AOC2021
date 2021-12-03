@@ -9,19 +9,19 @@ class Day3: Solution {
     private lateinit var inputBinaries: List<BinaryNumber>
 
     override fun prepare() {
-        prepareInputBinaries()
+        inputBinaries = input.map { BinaryNumber(it) }
     }
 
     override fun answer1(): Any {
         val gammaRate = getGammaRate(inputBinaries)
         val epsilonRate = !gammaRate
-        return gammaRate.toLong() * epsilonRate.toLong()
+        return (gammaRate * epsilonRate).toString(10)
     }
 
     override fun answer2(): Any{
         val oxyRate = getOxyRate(inputBinaries)
         val scrubRate = getScrubRate(inputBinaries)
-        return oxyRate.toLong() * scrubRate.toLong()
+        return (oxyRate * scrubRate).toString(10)
     }
 
     /******************
@@ -31,8 +31,7 @@ class Day3: Solution {
     private fun getGammaRate(inputBinaries: List<BinaryNumber>): BinaryNumber = BinaryNumber(
         inputBinaries.first().indices.map{ bit ->
             inputBinaries.mostCommonBit(bit)
-        }
-    )
+        })
 
     private fun getOxyRate(binaryNumbers: List<BinaryNumber>, index: Int = 0): BinaryNumber {
         val wantedValue = binaryNumbers.mostCommonBit(index)
@@ -51,10 +50,6 @@ class Day3: Solution {
     /********************
      * Helper functions *
      ********************/
-
-    private fun prepareInputBinaries() {
-        inputBinaries = input.map { BinaryNumber(it) }
-    }
 
     private fun List<BinaryNumber>.findMatchingNumbers(index: Int, wantedValue: Boolean) =
         this.filter { it[index] == wantedValue }
