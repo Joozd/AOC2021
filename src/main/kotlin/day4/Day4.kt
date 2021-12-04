@@ -22,7 +22,6 @@ class Day4: Solution {
      *  -> Draw a number, and mark it on all bingo cards
      *  -> Check all cards to see if they are winning, if so, return the score
      *  -> repeat until out of numbers or a winner is picked
-     * - Calculate the score on that card
      */
     override fun answer1(): Any{
         val bingoCards = makeBingoCards()
