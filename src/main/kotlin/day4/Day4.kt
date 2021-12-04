@@ -37,7 +37,7 @@ class Day4: Solution {
     }
 
     /**
-     * Answer 1:
+     * Answer 2:
      * - Find the losing Bingo Card
      *  -> Keep playing and removing winning cards until there is only one card left.
      * - Calculate the score on that card
