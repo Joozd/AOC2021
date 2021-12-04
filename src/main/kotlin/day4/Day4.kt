@@ -27,7 +27,8 @@ class Day4: Solution {
         val bingoCards = makeBingoCards()
         drawnNumbers.forEach { drawnNumber ->
             bingoCards.forEach { bingoCard ->
-                bingoCard.mark(drawnNumber)?.let{
+                bingoCard.mark(drawnNumber)
+                bingoCard.score(drawnNumber)?.let{
                     return it
                 }
             }
@@ -46,11 +47,10 @@ class Day4: Solution {
         drawnNumbers.forEach { drawnNumber ->
             val cardsThisRound = bingoCards.toList() // copy so we don't change a list while iterating over it
             cardsThisRound.forEach { bingoCard ->
-                bingoCard.mark(drawnNumber)?.let {
-                    if (bingoCards.size == 1)
-                        return it
-                    else
-                        bingoCards.remove(bingoCard)
+                bingoCard.mark(drawnNumber)
+                bingoCard.score(drawnNumber)?.let {
+                    if (bingoCards.size == 1) return it
+                    bingoCards.remove(bingoCard)
                 }
             }
         }
