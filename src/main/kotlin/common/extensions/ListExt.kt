@@ -1,7 +1,14 @@
 package common.extensions
 
+/**
+ * Prints all elements on this list on a new line
+ */
 fun <E> List<E>.printLines() = this.joinToString("\n")
 
+
+/**
+ * Replace all elements [element] in this list with [replacement] in place
+ */
 fun <E> MutableList<E>.replace(element: E, replacement: E){
     val index = indexOf(element)
     if (index == -1) return
@@ -14,10 +21,5 @@ fun <E> MutableList<E>.replace(element: E, replacement: E){
  * How many elements are duplicates?
  * It doesn't matter how many occurrences, [x,x,x,x,x] will give "1"
  */
-fun <T> List<T>.countDuplicates(): Int{
-    val countedElements = HashMap<T, Int>()
-    forEach{ e ->
-        countedElements[e] = (countedElements[e] ?: 0) + 1
-    }
-    return countedElements.values.count { it > 1}
-}
+fun <T> List<T>.countDuplicates(): Int =
+    size - this.toSet().size

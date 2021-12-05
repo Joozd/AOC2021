@@ -26,7 +26,7 @@ class Day5: Solution {
 
     override fun answer2(): Any {
         val allCoordinatesOnLines = lines.flatten()
-        return allCoordinatesOnLines.countDuplicates()
+        return allCoordinatesOnLines.countDuplicates() // this part takes most time, in case
     }
 
     /**
