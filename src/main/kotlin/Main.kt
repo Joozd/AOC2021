@@ -8,7 +8,7 @@ fun main() {
         "3" -> day3.Day3().runTimed()
         "4" -> day4.Day4().runTimed()
         "5" -> day5.Day5().runTimed()
-        //"6" -> day6.Day6().runTimed()
+        "6" -> day6.Day6().runTimed()
         //"7" -> day7.Day7().runTimed()
         //"8" -> day8.Day8().runTimed()
         //"9" -> day9.Day9().runTimed()
