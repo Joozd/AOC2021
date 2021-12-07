@@ -12,7 +12,7 @@ class FishReproducer(initialFishes: List<Int>) {
      */
     fun tick(){
         spawnFish()
-        countDownFishes()
+        countDownFish()
     }
 
     fun count() = counts.sum()
@@ -28,7 +28,7 @@ class FishReproducer(initialFishes: List<Int>) {
     /**
      * Reduces the number of all fish.
      */
-    private fun countDownFishes(){
+    private fun countDownFish(){
         (1 until LIST_SIZE).forEach{ i ->
             counts[i-1] = counts[i]
         }
