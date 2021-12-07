@@ -11,7 +11,7 @@ class FishReproducer(initialFishes: List<Int>) {
      * Spawns new fish, resets '0'- fish to 6 and counts down all (other) fish.
      */
     fun tick(){
-        spawnFishes()
+        spawnFish()
         countDownFishes()
     }
 
@@ -20,7 +20,7 @@ class FishReproducer(initialFishes: List<Int>) {
     /**
      * Spawn fishes and reset '0' fish. Both of these need to be counted down!
      */
-    private fun spawnFishes(){
+    private fun spawnFish(){
         counts[7] += counts[0] // reset timer
         counts[9] = counts[0]  // spawn fish
     }
