@@ -4,7 +4,7 @@ package day6
  * Simulates the reproduction of lanternfish
  * They won't stay in order, because as wel all know, fish tend to swim around.
  */
-class SchoolOfLanternFish(initialFishes: List<Int>) {
+class FishReproducer(initialFishes: List<Int>) {
     private val counts = LongArray(LIST_SIZE) { i -> initialFishes.count { it == i}.toLong() }
 
     /**

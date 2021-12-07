@@ -20,14 +20,14 @@ class Day6: Solution {
     }
 
     /**
-     * Use a more sensible approach using [SchoolOfLanternFish]
+     * Use a more sensible approach using [FishReproducer]
      */
     override fun answer2(): Any {
-        val schoolOFLanternFish = SchoolOfLanternFish(input.grabInts())
+        val fishReproducer = FishReproducer(input.grabInts())
         repeat(DAYS_QUESTION_2){
-            schoolOFLanternFish.tick()
+            fishReproducer.tick()
         }
-        return schoolOFLanternFish.count()
+        return fishReproducer.count()
     }
 
     private fun List<Int>.spawn(): List<Int>{
