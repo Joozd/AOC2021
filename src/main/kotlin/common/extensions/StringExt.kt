@@ -16,3 +16,5 @@ fun String.grabInts(): List<Int> =
         .split(" ")
         .filter { it.isNotBlank()}
         .mapNotNull  { try { it.toInt() } catch (e: Exception){ null } }
+
+fun String.sortString() = this.toList().sorted().joinToString("")
