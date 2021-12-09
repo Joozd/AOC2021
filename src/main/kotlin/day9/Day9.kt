@@ -53,9 +53,10 @@ class Day9: Solution {
      * Make a list of basins from a map of coordinates and altitudes
      */
     private fun makeBasins(): List<List<Coordinate>>{
-        //remove all parts that are not part of a basin
-        val basinsMap = map.filter { it.value != 9 }.toMutableMap()
         val foundBasins = ArrayList<List<Coordinate>>()
+        //remove all parts that are not part of a basin
+        val basinsMap: MutableMap<Coordinate, Int> = makeBasinsMap()
+
         while(basinsMap.isNotEmpty()) {
             val foundBasin = findBasin(basinsMap)
             foundBasins.add(foundBasin)
@@ -65,16 +66,24 @@ class Day9: Solution {
     }
 
     /**
+     * Make a map with only basins, any separations (value 9) between basins are not in this map.
+     */
+    private fun makeBasinsMap() = map.filter { it.value != 9 }.toMutableMap()
+
+    /**
      * Find all connecting Coordinates in[map]
      * Map has all "9" values removed so all connecting coordinates are part of the same basin.
      */
     private fun findBasin(map: Map<Coordinate, Int>): List<Coordinate> {
         val foundPoints = ArrayList<Coordinate>()
         foundPoints.add(map.keys.first())
-        var foundNeighbours = findAllNeighbors(foundPoints, map)
-        while(foundNeighbours.isNotEmpty()){
-            foundPoints.addAll(foundNeighbours)
-            foundNeighbours = findAllNeighbors(foundPoints, map)
+        var foundNeighbors = findAllNeighbors(foundPoints, map)
+
+        // While any point in [foundPoints] has any neighbors that are not in the list yet:
+        // add those neighbors to the list
+        while(foundNeighbors.isNotEmpty()){
+            foundPoints.addAll(foundNeighbors)
+            foundNeighbors = findAllNeighbors(foundPoints, map)
         }
         return foundPoints
     }
@@ -82,10 +91,11 @@ class Day9: Solution {
     /**
      * Find all neighbors from a list of Coordinates that are valid coordinates in [map]
      */
+    @Suppress("ConvertCallChainIntoSequence") // it is actually about 20% slower as a sequence
     private fun findAllNeighbors(coordinates: List<Coordinate>, map: Map<Coordinate, Int>): List<Coordinate> =
         coordinates.map { it.possibleNeighbors() }
             .flatten()
             .distinct()
             .filter { it in map.keys }
-            .filter {it !in coordinates }
+            .filter {it !in coordinates }.toList()
 }
