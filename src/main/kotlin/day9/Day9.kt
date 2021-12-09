@@ -1,7 +1,9 @@
 package day9
 
-import common.Coordinate
+import common.coordinates.Coordinate
 import common.Solution
+import common.coordinates.CoordinateWithValue
+import common.coordinates.PNGMap
 import common.extensions.product
 import common.extensions.removeAllKeys
 
@@ -34,7 +36,14 @@ class Day9: Solution {
      */
     override fun answer2(): Any {
         val basins = makeBasins()
+
+        /* This part will output 2 PNG maps ******
+        exportMap()                             //
+        exportBasins(basins)                    //
+        *****************************************/
+
         return getProductOfBiggestThree(basins)
+
     }
 
     /**
@@ -97,5 +106,42 @@ class Day9: Solution {
             .flatten()
             .distinct()
             .filter { it in map.keys }
-            .filter {it !in coordinates }.toList()
+            .filter {it !in coordinates }
+
+
+    /**
+     * Bonus: Export some PNG files with the map
+     */
+
+    /**
+     * Export map (red = high, green is low)
+     */
+    private fun exportMap(){
+        val outputFile = "c:\\temp\\map.png"
+        val data = map.keys.map { CoordinateWithValue(it.x, it.y, map[it]!!) }
+        PNGMap(data).apply{
+            defineColors{ point ->
+                val r = 255 * point.value / 9
+                val g = 255 * (9 - point.value) / 9
+                (r.shl(8) + g).shl(8)
+            }
+            saveImage(outputFile)
+        }
+    }
+
+
+    /**
+     * Export all different basins with random colors
+     */
+    private fun exportBasins(basins: List<List<Coordinate>>){
+        val outputFile = "c:\\temp\\basins.png"
+        val codedBasins = basins.mapIndexed { index, coordinates ->
+            coordinates.map { CoordinateWithValue(it.x, it.y, index) }
+        }.flatten()
+        val colorsMap = codedBasins.indices.map { it to (0..0xFFFFFF).random() }.toMap()
+        PNGMap(codedBasins).apply{
+            defineColors{ v-> colorsMap[v.value] ?: 0xFF0000 }
+            saveImage(outputFile)
+        }
+    }
 }
