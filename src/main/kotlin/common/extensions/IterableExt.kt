@@ -7,3 +7,5 @@ fun Iterable<Int?>.sumNotNull(): Int {
     }
     return sum
 }
+
+fun Iterable<Int>.product() = reduce { acc, i -> acc * i }

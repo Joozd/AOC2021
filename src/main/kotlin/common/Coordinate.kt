@@ -6,6 +6,13 @@ package common
  */
 
 open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
+    fun possibleNeighbors() = listOf(
+        Coordinate(x, y-1),
+        Coordinate(x-1, y),
+        Coordinate(x+1, y),
+        Coordinate(x, y+1)
+    )
+
     override fun equals(other: Any?) = if (other !is Coordinate) false else
         other.x == x && other.y == y
     override fun toString() = "($x, $y)"
