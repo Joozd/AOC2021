@@ -28,7 +28,7 @@ class Day9: Solution {
      */
     override fun answer1(): Any {
         val localMinimums = map.keys.filter { map[it]!! < it.getLowestNeighbor() }
-        return localMinimums.sumBy { map[it]!! + 1 }
+        return localMinimums.sumOf{ map[it]!! + 1 }
     }
 
     /**
