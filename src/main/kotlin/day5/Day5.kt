@@ -1,7 +1,7 @@
 package day5
 
-import common.Coordinate
-import common.Line
+import common.coordinates.Coordinate
+import common.coordinates.Line
 import common.Solution
 import common.extensions.countDuplicates
 import common.extensions.grabInts
@@ -32,7 +32,7 @@ class Day5: Solution {
     /**
      * Build a [Line] from a String like "0,9 -> 5,9"
      */
-    private fun buildLine(lineString: String): Line{
+    private fun buildLine(lineString: String): Line {
         val words = lineString.words()
         val start = coordinateFromString(words.first())
         val end = coordinateFromString(words.last())
@@ -43,5 +43,5 @@ class Day5: Solution {
      * Build a [Coordinate] from a string like "0,9"
      */
     private fun coordinateFromString(string: String) =
-        string.grabInts().let { Coordinate(it[0], it[1])}
+        string.grabInts().let { Coordinate(it[0], it[1]) }
 }

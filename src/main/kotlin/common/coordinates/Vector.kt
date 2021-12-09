@@ -1,4 +1,4 @@
-package common
+package common.coordinates
 
 class Vector(val directionX: Int, val directionY: Int): Comparable<Vector> {
     override fun equals(other: Any?) = if (other !is Vector) false else

@@ -1,4 +1,4 @@
-package common
+package common.coordinates
 
 import common.extensions.abs
 

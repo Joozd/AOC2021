@@ -1,8 +1,4 @@
-import common.Coordinate
-import common.Line
-import common.extensions.grabInts
 import org.junit.Test
-import kotlin.test.assertEquals
 
 class Test {
     @Test

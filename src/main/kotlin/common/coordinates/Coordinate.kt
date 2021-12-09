@@ -1,4 +1,4 @@
-package common
+package common.coordinates
 
 /**
  * because Pairs are too confusing for Joozd

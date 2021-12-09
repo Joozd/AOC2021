@@ -1,8 +1,8 @@
 package day2
 
-import common.Coordinate
+import common.coordinates.Coordinate
 import common.Solution
-import common.Vector
+import common.coordinates.Vector
 
 class Day2: Solution {
     override val day = 2
@@ -47,7 +47,7 @@ class Day2: Solution {
         }
     }
 
-    private fun Coordinate.moveWithAim(line: String, aim: Int): Coordinate{
+    private fun Coordinate.moveWithAim(line: String, aim: Int): Coordinate {
         if (line.first() != 'f') return this
         val amount = line.lineValue()
         return this + Vector(amount, amount* aim)
