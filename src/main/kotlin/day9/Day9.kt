@@ -43,7 +43,6 @@ class Day9: Solution {
         *****************************************/
 
         return getProductOfBiggestThree(basins)
-
     }
 
     /**
@@ -115,6 +114,7 @@ class Day9: Solution {
 
     /**
      * Export map (red = high, green is low)
+     * Could probably extract some functions for extra readability but meh
      */
     private fun exportMap(){
         val outputFile = "c:\\temp\\map.png"
@@ -131,7 +131,8 @@ class Day9: Solution {
 
 
     /**
-     * Export all different basins with random colors
+     * Export all different basins with random colors.
+     * Could probably extract some functions for extra readability but meh
      */
     private fun exportBasins(basins: List<List<Coordinate>>){
         val outputFile = "c:\\temp\\basins.png"
