@@ -18,7 +18,7 @@ class Day9: Solution {
     override fun prepare() {
         map = input.mapIndexed { y, line ->
             line.mapIndexed { x, elevation ->
-                Coordinate(x,y) to elevation.toString().toInt()
+                Coordinate(x,y) to elevation.digitToInt()
             }
         }.flatten().toMap()
     }

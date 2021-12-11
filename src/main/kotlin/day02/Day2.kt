@@ -53,5 +53,5 @@ class Day2: Solution {
         return this + Vector(amount, amount* aim)
     }
 
-    private fun String.lineValue(): Int = last().toString().toInt()
+    private fun String.lineValue(): Int = last().digitToInt()
 }
