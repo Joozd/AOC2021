@@ -1,4 +1,4 @@
-package day6
+package day06
 
 /**
  * Simulates the reproduction of lanternfish
