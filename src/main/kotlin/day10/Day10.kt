@@ -43,7 +43,9 @@ class Day10: Solution {
      * Get bad closing characters in a line, or null if no bad characters in line
      */
     private fun getBadCharacter(line: String) =
-        reduceChunk(line).firstOrNull { it in ")]}>" }
+        reduceChunk(line).firstOrNull {
+            it in CLOSING_CHARS
+        }
 
     /**
      * Remove all complete empty chunks from line
@@ -88,5 +90,9 @@ class Day10: Solution {
             currentScore += scoreTable2[c]!!
         }
         return currentScore
+    }
+
+    companion object{
+        private const val CLOSING_CHARS = ")]}>"
     }
 }
