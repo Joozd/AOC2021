@@ -2,6 +2,10 @@ package day12
 
 import common.Solution
 
+/**
+ * BFS solution for day 12.
+ * Used this as my initial solution
+ */
 class Day12: Solution {
     override val day = 12
 
