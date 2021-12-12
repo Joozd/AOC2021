@@ -55,7 +55,7 @@ class Day9: Solution {
      * Get the neighbour with the lowest value
      */
     private fun Coordinate.getLowestNeighbor() =
-        possibleNeighbors().minOf { map[it] ?: Int.MAX_VALUE }
+        fourNeighbors().minOf { map[it] ?: Int.MAX_VALUE }
 
     /**
      * Make a list of basins from a map of coordinates and altitudes
@@ -101,7 +101,7 @@ class Day9: Solution {
      */
     @Suppress("ConvertCallChainIntoSequence") // it is actually about 20% slower as a sequence
     private fun findAllNeighbors(coordinates: List<Coordinate>, map: Map<Coordinate, Int>): List<Coordinate> =
-        coordinates.map { it.possibleNeighbors() }
+        coordinates.map { it.fourNeighbors() }
             .flatten()
             .distinct()
             .filter { it in map.keys }

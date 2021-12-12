@@ -1,3 +1,3 @@
 package common.coordinates
 
-open class CoordinateWithValue<T>(x: Int, y: Int, val value: T): Coordinate(x,y)
+open class CoordinateWithValue<T>(x: Int, y: Int, var value: T): Coordinate(x,y)

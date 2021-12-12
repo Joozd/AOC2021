@@ -6,12 +6,22 @@ package common.coordinates
  */
 
 open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
-    fun possibleNeighbors() = listOf(
+    fun fourNeighbors() = listOf(
         Coordinate(x, y-1),
         Coordinate(x-1, y),
         Coordinate(x+1, y),
         Coordinate(x, y+1)
     )
+
+    fun eightNeighbors() =
+        (y-1..y+1).map{ y ->
+            (x-1..x+1).mapNotNull { x->
+                if(x == this.x && y == this.y) null
+                else Coordinate(x,y)
+            }
+        }.flatten()
+
+
 
     override fun equals(other: Any?) = if (other !is Coordinate) false else
         other.x == x && other.y == y
