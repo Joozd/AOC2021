@@ -15,8 +15,12 @@ fun main() {
         "10" -> day10.Day10().runTimed()
         "11" -> day11.Day11().runTimed()
         "12" -> day12.Day12Recursive().runTimed()
-        //"13" -> day13.Day13().runTimed()
+        "13" -> day13.Day13().runTimed()
         //"14" -> day14.Day14().runTimed()
+        //"15" -> day15.Day15().runTimed()
+        //"16" -> day16.Day16().runTimed()
+        //"17" -> day17.Day17().runTimed()
+        //"18" -> day18.Day18().runTimed()
         else -> println("Day not found, exiting")
     }
 }
