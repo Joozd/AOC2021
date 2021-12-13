@@ -6,6 +6,8 @@ package common.coordinates
  */
 
 open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
+    constructor(coordinatesList: List<Int>): this(coordinatesList[0], coordinatesList[1])
+
     fun fourNeighbors() = listOf(
         Coordinate(x, y-1),
         Coordinate(x-1, y),
