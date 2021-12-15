@@ -52,7 +52,7 @@ class Day9: Solution {
         basins.map { it.size }.sortedDescending().take(3).product()
 
     /**
-     * Get the neighbour with the lowest value
+     * Get the neighbor with the lowest value
      */
     private fun Coordinate.getLowestNeighbor() =
         fourNeighbors().minOf { map[it] ?: Int.MAX_VALUE }
