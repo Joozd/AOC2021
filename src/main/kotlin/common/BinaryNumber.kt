@@ -8,7 +8,7 @@ class BinaryNumber(private val bits: List<Boolean>): Number(), Comparable<Binary
 
     override fun toByte(): Byte = getValue().toByte()
 
-    override fun toChar(): Char = getValue().toChar()
+    override fun toChar(): Char = getValue().toInt().toChar()
 
     override fun toDouble(): Double = getValue().toDouble()
 
