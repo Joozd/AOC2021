@@ -5,6 +5,7 @@ import kotlin.system.measureNanoTime
 
 interface Solution {
     val day: Int
+
     fun answer1(): Any?
 
     fun answer2(): Any?
