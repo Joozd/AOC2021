@@ -29,7 +29,7 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
         other.x == x && other.y == y
     override fun toString() = "($x, $y)"
 
-    override fun hashCode(): Int  = x.shl(16) + y
+    override fun hashCode(): Int  = x * 500 + y
 
     /**
      *  top to bottom, left to right (y=0 is top row)
