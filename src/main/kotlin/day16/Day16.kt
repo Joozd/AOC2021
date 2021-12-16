@@ -14,7 +14,13 @@ class Day16: Solution {
         outerPacket = Packet.parseOnePacket(inputBinary)
     }
 
+    /**
+     * The sum of all version numbers of all packets
+     */
     override fun answer1(): Any = outerPacket.sumOfVerionNumbers()
 
+    /**
+     * The result of the calculation done in the top Packet
+     */
     override fun answer2(): Any = outerPacket()
 }

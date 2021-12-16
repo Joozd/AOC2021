@@ -4,24 +4,41 @@ import common.extensions.printLines
 import day16.getTypeID
 import day16.getVersion
 
-abstract class Operator protected constructor(version: Int, protected val subPackets: List<Packet>, bitsUsedInConstructing: Int): Packet(version, bitsUsedInConstructing) {
+/**
+ * An Operator is a Packet that performs a function
+ */
+abstract class Operator protected constructor(
+    version: Int,
+    private val subPackets: List<Packet>,
+    bitsUsedInConstructing: Int
+): Packet(version, bitsUsedInConstructing) {
+    /**
+     * The sum of this packets version numbers and the version numbers of any packets below it
+     */
     override fun sumOfVerionNumbers() = version + subPackets.sumOf { it.sumOfVerionNumbers() }
+
     override fun toString() = "Operator v$version:\n${subPackets.printLines().prependIndent()}"
 
+    /**
+     * The values received by performing the actions of all Packets in [subPackets]
+     */
     protected fun values(): List<Long> = subPackets.map { it() }
+
 
     companion object{
         private const val EXTRA_HEADER_LENGTH = 1
         private const val LENGTH_TYPE_BITS = '0'
-        private const val LENGTH_TYPE_PACKETS = '1'
 
-
+        /**
+         * Create one Packet from input string
+         * This includes all child Packets
+         */
         fun make(input: String): Operator {
             val version = input.getVersion()
             val typeID = input.getTypeID()
             val lengthType = input[6]
             val length = getLength(lengthType, input)
-            val headerLength = HEADER_LENGTH + EXTRA_HEADER_LENGTH + bitsForContentLength(lengthType)
+            val headerLength = HEADER_LENGTH_OPERATOR + bitsForContentLength(lengthType)
             val dataString = input.substring(headerLength)
             val packets = getPackets(dataString, lengthType, length)
             val bitsUsed =
@@ -41,14 +58,23 @@ abstract class Operator protected constructor(version: Int, protected val subPac
             }
         }
 
+        /**
+         * Get all child Packets for this Packet
+         */
         private fun getPackets(input: String, lengthType: Char, length: Int) =
             if (lengthType == LENGTH_TYPE_BITS)
                 getPacketsFromNBits(input, length)
             else getNPackets(input, length)
 
-        private fun getPacketsFromNBits(input: String, length: Int) =
+        /**
+         * Get all packets in the first n bits in [input] and return them as a list
+         */
+        private fun getPacketsFromNBits(input: String, length: Int): List<Packet> =
             makePackets(input.take(length))
 
+        /**
+         * Get the next [length] packets from [input]
+         */
         private fun getNPackets(input: String, length: Int): List<Packet>{
             var workingString = input
             return (0 until length).map{
@@ -58,6 +84,9 @@ abstract class Operator protected constructor(version: Int, protected val subPac
             }
         }
 
+        /**
+         * The amount of bits used to describe the amount of data to create child Packets from
+         */
         private fun bitsForContentLength(lengthType: Char) =
             if (lengthType == LENGTH_TYPE_BITS) 15 else 11
 
@@ -65,9 +94,7 @@ abstract class Operator protected constructor(version: Int, protected val subPac
          * Get number from 11 or 15 bits after header, depending on [lengthType]
          */
         private fun getLength(lengthType: Char, input: String): Int {
-            val h = HEADER_LENGTH + EXTRA_HEADER_LENGTH
-            return input.substring(h until h + bitsForContentLength(lengthType)).toInt(2)
+            return input.substring(HEADER_LENGTH_OPERATOR until HEADER_LENGTH_OPERATOR + bitsForContentLength(lengthType)).toInt(2)
         }
-
     }
 }
