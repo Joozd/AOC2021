@@ -6,4 +6,6 @@ fun String.toBinaryString(): String =
 
 fun String.getVersion() = take(3).toInt(2)
 
-fun String.getID() = substring(3..5).toInt(2)
+fun String.getTypeID() = substring(3..5).toInt(2)
+
+fun String.containsAnyOnes() = any { it == '1'}

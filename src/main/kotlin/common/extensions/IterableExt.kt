@@ -9,3 +9,4 @@ fun Iterable<Int?>.sumNotNull(): Int {
 }
 
 fun Iterable<Int>.product() = reduce { acc, i -> acc * i }
+fun Iterable<Long>.product() = reduce { acc, i -> acc * i }
