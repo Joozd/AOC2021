@@ -24,7 +24,7 @@ class Day15: Solution {
         val start = startCave(cavesMap)
         val end = endCave(cavesMap)
         val route = routeFinder.findRoute(start, end)!!.map { it as Cave}
-        PNGMap(route, scale = 3).saveImage("c:\\temp\\caves.png")
+        // PNGMap(route, scale = 3).saveImage("c:\\temp\\caves.png")
         return routeFinder.getFoundDistance()
     }
 
