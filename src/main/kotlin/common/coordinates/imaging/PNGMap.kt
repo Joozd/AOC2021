@@ -1,5 +1,6 @@
-package common.coordinates
+package common.coordinates.imaging
 
+import common.coordinates.CoordinateWithValue
 import java.awt.image.BufferedImage
 import java.io.File
 import javax.imageio.ImageIO
@@ -19,6 +20,13 @@ class PNGMap<T>(private val map: List<CoordinateWithValue<T>>, private val scale
         draw(image, dimensions)
         val resizedImage = scale(image, scale)
         ImageIO.write(resizedImage, "PNG", File(filename))
+    }
+
+    fun makeBufferedImage(): BufferedImage{
+        val dimensions = DrawingArea(map)
+        val image = BufferedImage(dimensions.width + 1, dimensions.height + 1, BufferedImage.TYPE_INT_RGB)
+        draw(image, dimensions)
+        return scale(image, scale)
     }
 
     // Draw the map onto the image

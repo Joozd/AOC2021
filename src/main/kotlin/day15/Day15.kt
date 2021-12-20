@@ -1,7 +1,6 @@
 package day15
 
 import common.Solution
-import common.coordinates.PNGMap
 import common.dijkstra.Dijkstra
 
 class Day15: Solution {

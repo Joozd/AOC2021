@@ -23,6 +23,16 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
             }
         }.flatten()
 
+    /**
+     * Make a block n steps deep on all sides
+     * This is an n*2+1 by n*2+1 block, so 3x3 is distance 1, 5x5 is distance 2, etc
+     */
+    fun block(distance: Int = 1) =
+        (y-distance..y+distance).map{ y ->
+            (x-distance..x+distance).mapNotNull { x->
+                Coordinate(x,y)
+            }
+        }.flatten()
 
 
     override fun equals(other: Any?) = if (other !is Coordinate) false else

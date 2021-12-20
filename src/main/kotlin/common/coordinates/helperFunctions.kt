@@ -1,12 +1,10 @@
 package common.coordinates
 
-import common.extensions.printLines
-
 fun Collection<CoordinateWithValue<*>>.drawMap(): String{
     val dimensions = DrawingArea(this)
     val map = Array(dimensions.height + 1) { y ->
         CharArray(dimensions.width + 1) { x ->
-            this.firstOrNull { it == Coordinate(x,y) }?.value?.toString()?.first() ?: ' '
+            this.firstOrNull { it == Coordinate(x - dimensions.offsetX,y - dimensions.offsetY) }?.value?.toString()?.first() ?: ' '
         }
     }
     return map.joinToString("\n") { String(it) }

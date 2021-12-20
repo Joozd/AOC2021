@@ -3,7 +3,7 @@ package day09
 import common.coordinates.Coordinate
 import common.Solution
 import common.coordinates.CoordinateWithValue
-import common.coordinates.PNGMap
+import common.coordinates.imaging.PNGMap
 import common.extensions.product
 import common.extensions.removeAllKeys
 

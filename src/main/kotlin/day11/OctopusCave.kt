@@ -1,7 +1,7 @@
 package day11
 
 import common.coordinates.Coordinate
-import common.coordinates.PNGMap
+import common.coordinates.imaging.PNGMap
 import common.coordinates.drawMap
 
 /**
