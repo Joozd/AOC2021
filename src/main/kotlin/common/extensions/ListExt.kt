@@ -34,16 +34,6 @@ fun <T> zip(listsToZip: Collection<List<T>>): List<List<T>>{
     return lists.toList()
 }
 
-fun <T, O> List<T>.mapMultiThreaded( action: (T) -> O): List<O>{
-    val coroutineContext = CoroutineScope(Dispatchers.Default)
-    val results = this.map{
-        coroutineContext.async { action(it) }
-    }
-    return runBlocking {
-        results.awaitAll()
-    }
-
-}
 
 fun <T, O> List<T>.mapNotNullMultiThreaded( action: (T) -> O?): List<O> =
     mapMultiThreaded(action).filterNotNull()

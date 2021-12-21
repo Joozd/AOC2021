@@ -21,5 +21,15 @@ fun <T> Iterable<T>.forEachMultyThreaded( action: (T) -> Unit){
     runBlocking {
         results.awaitAll()
     }
+}
 
+
+fun <T, O> Iterable<T>.mapMultiThreaded( action: (T) -> O): List<O>{
+    val coroutineContext = CoroutineScope(Dispatchers.Default)
+    val results = this.map{
+        coroutineContext.async { action(it) }
+    }
+    return runBlocking {
+        results.awaitAll()
+    }
 }

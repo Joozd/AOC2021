@@ -1,6 +1,7 @@
 package day21
 
 import common.Solution
+import common.extensions.mapMultiThreaded
 import common.extensions.words
 import kotlin.math.max
 
@@ -29,10 +30,15 @@ class Day21: Solution {
 
     override fun answer2(): Any {
         val initialGameState = GameState(input, 21)
-        return playDiracDice(initialGameState, true).let{
+        return playDiracDiceMultithreaded(initialGameState, true).let{
             max(it.first, it.second)
         }
     }
+
+    private fun playDiracDiceMultithreaded(gameState: GameState, playerOnesTurn: Boolean): Pair<Long, Long> =
+        diracDice.roll().entries.mapMultiThreaded{ rollWithWeight ->
+            (getResultForRoll(gameState.copy(), playerOnesTurn, rollWithWeight.key) * rollWithWeight.value)
+        }.sum()
 
     private fun playDiracDice(gameState: GameState, playerOnesTurn: Boolean): Pair<Long, Long> =
         diracDice.roll().map{ rollWithWeight ->
