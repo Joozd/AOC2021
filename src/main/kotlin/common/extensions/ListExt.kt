@@ -1,9 +1,11 @@
 package common.extensions
 
+import kotlinx.coroutines.*
+
 /**
  * Prints all elements on this list on a new line
  */
-fun <E> List<E>.printLines() = this.joinToString("\n")
+fun <E> Iterable<E>.printLines() = this.joinToString("\n")
 
 
 /**
@@ -23,6 +25,28 @@ fun <E> MutableList<E>.replace(element: E, replacement: E){
  */
 fun <T> List<T>.countDuplicates(): Int =
     size - this.toSet().size
+
+fun <T> zip(listsToZip: Collection<List<T>>): List<List<T>>{
+    val minSize = listsToZip.minOfOrNull{ it.size } ?: return emptyList()
+    val lists = Array(minSize){ i ->
+        listsToZip.map{ l-> l[i] }
+    }
+    return lists.toList()
+}
+
+fun <T, O> List<T>.mapMultiThreaded( action: (T) -> O): List<O>{
+    val coroutineContext = CoroutineScope(Dispatchers.Default)
+    val results = this.map{
+        coroutineContext.async { action(it) }
+    }
+    return runBlocking {
+        results.awaitAll()
+    }
+
+}
+
+fun <T, O> List<T>.mapNotNullMultiThreaded( action: (T) -> O?): List<O> =
+    mapMultiThreaded(action).filterNotNull()
 
 operator fun <T> List<T>.times(n: Int): List<T>{
     val result = ArrayList<T>(size*n)
