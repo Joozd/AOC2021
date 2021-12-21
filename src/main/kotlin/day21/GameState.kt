@@ -1,25 +1,33 @@
 package day21
 
-class GameState(initialPositions: List<Int>, private val endOfGame: Int = 1000, private val s: IntArray = IntArray(3) { 0 }){
-    fun copy() = GameState(p.drop(1), endOfGame, s.copyOf())
-    override fun toString() = "s[1] = ${s[1]}, p[1] = ${p[1]}\ns[2] = ${s[2]}, p[2] = ${p[2]}\n"
-    private val p = IntArray(3){ if (it == 0) 0  else initialPositions[it-1] } // extra field because we use indices 1 and 2
-    fun hasWinner() = listOf(1,2).any { isWinner(it) }
+class GameState(private var p1: Int, private var p2: Int, private val endOfGame: Int = 1000, private var s1: Int = 0, private var s2: Int = 0){
+    fun copy() = GameState(p1, p2, endOfGame, s1,s2)
+    override fun toString() = "p1, s1 / p2, s2"
+    fun hasWinner() = listOf(0,1).any { isWinner(it) }
 
     /**
      * This does not check if there IS a winner, if there isn't it will return 2
      */
-    fun playerOneWon(): Boolean = isWinner(1)
+    fun playerOneWon(): Boolean = isWinner(0)
 
     fun addRoll(player: Int, value: Int){
-        val r = p[player] + value
-        p[player] = if (r == 10) 10 else r%10
-        s[player] += p[player]
-        //println(this)
+        if(player == 1)
+            roll1(value)
+        else roll2(value)
+    }
+    private fun roll1(value: Int){
+        val r = p1 + value
+        p1 = if (r == 10) 10 else r%10
+        s1 += p1
+    }
+    private fun roll2(value: Int){
+        val r = p2 + value
+        p2 = if (r == 10) 10 else r%10
+        s2 += p2
     }
 
-    fun score(rolls: Int) = (if (isWinner(1)) s[2] else s[1]) * rolls
+    fun score(rolls: Int) = (if (isWinner(0)) s1 else s2) * rolls
 
-    private fun isWinner(player: Int): Boolean = s[player] >= endOfGame
+    private fun isWinner(player: Int): Boolean = if(player == 1) s1 >= endOfGame else s2 >= endOfGame
 
 }

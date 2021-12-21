@@ -13,23 +13,23 @@ class Day21: Solution {
     private val diracDice = DiracDice(3)
 
     override fun answer1(): Any {
-        val game = GameState(testInput, 1000)
+        val game = GameState(input[0], input[1], 1000)
         val dice = Dice()
 
         while(!game.hasWinner()){
-            game.addRoll(1, dice.roll())
+            game.addRoll(0, dice.roll())
             if (game.hasWinner()) {
                 println("player 1 won: $game")
                 println("Rolls: ${dice.rolls}")
                 return game.score(dice.rolls)
             }
-            game.addRoll(2, dice.roll())
+            game.addRoll(1, dice.roll())
         }
         return game.score(dice.rolls)
     }
 
     override fun answer2(): Any {
-        val initialGameState = GameState(input, 21)
+        val initialGameState = GameState(input[0], input[1], 21)
         return playDiracDiceMultithreaded(initialGameState, true).let{
             max(it.first, it.second)
         }
@@ -52,7 +52,7 @@ class Day21: Solution {
      */
     private fun getResultForRoll(gameState: GameState, playerOnesTurn: Boolean, roll: Int): Pair<Long, Long>{
        // println(gameState)
-        gameState.addRoll(if (playerOnesTurn) 1 else 2, roll)
+        gameState.addRoll(if (playerOnesTurn) 0 else 1, roll)
         return if (gameState.hasWinner()){
             //println("winning game:\n$gameState")
             if (gameState.playerOneWon()) 1L to 0L else 0L to 1L
