@@ -1,6 +1,7 @@
 package day14
 
 import common.Solution
+import common.countEqualElements
 import common.extensions.words
 import java.lang.StringBuilder
 
@@ -91,22 +92,16 @@ class Day14: Solution {
     private fun count(polymer: CharSequence) = polymer.groupingBy { it }.eachCount()
 
     /**
-     * Count the elements ina  Collection and return them as a map
-     */
-    private fun <T> count(collection: Collection<T>) = collection.groupingBy { it }.eachCount()
-
-    /**
      * Do the same reaction only considering the amount of pairs and not their sequence
      */
     private fun onlyPairs(repeats: Int): Map<CharSequence, Long>{
-        var pairs: Map<CharSequence, Long> = count(template.makePairsOfTwo()).map { it.key to it.value.toLong()}.toMap()
+        var pairs: Map<CharSequence, Long> = countEqualElements(template.makePairsOfTwo()).map { it.key to it.value.toLong()}.toMap()
 
         repeat(repeats) {
             pairs = reactPairs(pairs)
         }
         return pairs
     }
-
     /**
      * React all pairs in this map
      */
