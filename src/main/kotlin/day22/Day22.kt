@@ -13,7 +13,7 @@ class Day22: Solution {
     override fun answer1(): Any {
         input.forEach { line ->
             ReactorCube.parse(line){ it in -50..50 }?.let{ cube ->            // make a cube if it is in (-50..50)
-                includeCubeInList(cube)
+                includeCubeInList(cube, cubes)
             }
         }
         //This also works with calculateVolumeClean() of course, but this is the way I initially did it
@@ -29,7 +29,7 @@ class Day22: Solution {
     override fun answer2(): Any {
         input.forEach { line ->
             ReactorCube.parse(line) { it !in -50..50}?.let { cube -> // make a cube if it is NOT in (-50..50)
-                includeCubeInList(cube)
+                includeCubeInList(cube, cubes)
             }
         }
         return cubes.filter { it.switchOn }.sumOf { cube ->
@@ -40,7 +40,7 @@ class Day22: Solution {
     /**
      * Overlap this cube with all currently known cubes, then add it to the list of known cubes.
      */
-    private fun includeCubeInList(cube: ReactorCube){
+    private fun includeCubeInList(cube: ReactorCube, cubes: MutableList<ReactorCube>){
         overlapCube(cube)
         cubes.add(cube)
     }
