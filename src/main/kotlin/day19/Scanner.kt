@@ -1,5 +1,6 @@
 package day19
 
+import common.coordinates.XYZCoordinate
 import common.extensions.zip
 
 /**
@@ -180,9 +181,9 @@ class Scanner(private val pingedBeacons: List<XYZCoordinate>, val name: String =
             this,
             map{ XYZCoordinate(it.z, it.x, it.y) },
             map{ XYZCoordinate(it.y, it.z, it.x) },
-            map{ XYZCoordinate(it.x * -1, it.z*-1, it.y*-1)},
-            map{ XYZCoordinate(it.y * -1, it.x*-1, it.z*-1)},
-            map{ XYZCoordinate(it.z * -1, it.y*-1, it.x*-1)},
+            map{ XYZCoordinate(it.x * -1, it.z*-1, it.y*-1) },
+            map{ XYZCoordinate(it.y * -1, it.x*-1, it.z*-1) },
+            map{ XYZCoordinate(it.z * -1, it.y*-1, it.x*-1) },
         )
 
     /**
@@ -212,7 +213,7 @@ class Scanner(private val pingedBeacons: List<XYZCoordinate>, val name: String =
         fun parse(text: String): Scanner{
             val lines = text.lines()
             val name = lines.first()
-            val cc = lines.drop(1).map{XYZCoordinate.parse(it)}
+            val cc = lines.drop(1).map{ XYZCoordinate.parse(it)}
             return Scanner(cc, name)
         }
     }

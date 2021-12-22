@@ -1,4 +1,4 @@
-package day19
+package common.coordinates
 
 import common.extensions.grabInts
 
