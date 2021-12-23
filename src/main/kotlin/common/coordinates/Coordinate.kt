@@ -1,11 +1,14 @@
 package common.coordinates
 
+import common.dijkstra.GridNode
+import common.dijkstra.Node
+
 /**
  * because Pairs are too confusing for Joozd
  * Hash is unreliable for x and y values above 2^16
  */
 
-open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
+open class Coordinate(override val x: Int, override val y: Int): Comparable<Coordinate>, GridNode{
     constructor(coordinatesList: List<Int>): this(coordinatesList[0], coordinatesList[1])
 
     fun fourNeighbors() = listOf(
@@ -34,6 +37,9 @@ open class Coordinate(val x: Int, val y: Int): Comparable<Coordinate>{
             }
         }.flatten()
 
+    override fun getNeighbors() = fourNeighbors()
+
+    override fun getDistanceToNeighbor(neighbor: Node<Int>) = 1
 
     override fun equals(other: Any?) = if (other !is Coordinate) false else
         other.x == x && other.y == y

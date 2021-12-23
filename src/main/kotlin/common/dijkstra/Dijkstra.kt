@@ -47,6 +47,32 @@ class Dijkstra<T: Comparable<T>>(private val expectedAMountOfNodes: Int = STANDA
         return null
     }
 
+    /**
+     * Generate a Set of all reachable nodes from [start]
+     * (pro-tip: only use this in finite networks)
+     */
+    fun findAllReachableNodes(start: Node<T>): Set<Node<T>>{
+        val foundNodes = HashSet<Node<T>>()
+        val visitingNodes = HashSet<Node<T>>()
+        visitingNodes.add(start)
+        while(visitingNodes.isNotEmpty()){
+            with(visitingNodes.first()){
+                visitingNodes.remove(this)
+                foundNodes.add(this)
+                visitingNodes.addAll(this.getUnvisitedNeighborNodes(foundNodes))
+            }
+        }
+        return foundNodes
+    }
+
+    /**
+     * Find distance from [start] to [end]
+     */
+    fun findDistance(start: Node<T>, end: Node<T>): T?{
+        findRoute(start, end)
+        return getFoundDistance()
+    }
+
     fun getFoundDistance(): T? = mostRecentCompletedRoute?.last()?.distanceToHere
 /*
     fun printBenchmarks(){
@@ -90,8 +116,7 @@ class Dijkstra<T: Comparable<T>>(private val expectedAMountOfNodes: Int = STANDA
          * get neighbors and put them in complete NodeDistanceAndPrevious objects
          */
         fun getNeighbors(visitedNodes: Set<Node<T>>): List<NodeDistanceAndPrevious> =
-             node.getNeighbors().filter { it !in visitedNodes }
-                .mapNotNull { refNode -> getNode(refNode) }
+             node.getUnvisitedNeighborNodes(visitedNodes)
                 .map { neighbor ->
                     NodeDistanceAndPrevious(
                         node = neighbor,
@@ -100,6 +125,13 @@ class Dijkstra<T: Comparable<T>>(private val expectedAMountOfNodes: Int = STANDA
                     )
                 }
     }
+
+    /**
+     * Get the neighbor nodes that are unvisited and retrieve them from [getNode]
+     */
+    private fun Node<T>.getUnvisitedNeighborNodes(visitedNodes: Set<Node<T>>) =
+        getNeighbors().filter { it !in visitedNodes }
+            .mapNotNull { refNode -> getNode(refNode) }
 
     /*
     private inline fun <T> measureTime(index: Int, block: () -> T): T{
