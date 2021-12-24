@@ -16,19 +16,23 @@ class Day23: Solution {
   #########""".lines()
 
 
-    override fun answer1(): Any {
+    /**
+     * For answer 1 I initially had the optimization that D always went straight to target,
+     * which worked in my input but not in example and sped things up by 4x.
+     */
+    override fun answer1(): Any? {
         val initialNetwork = buildCoordinatesWithValuesMap(input).filter {it.value in ".ABCD"}
         val initialState = State(initialNetwork)
-        return initialState()
+        return initialState.runThreaded()
     }
 
     /**
      * 2047483693 too high
      */
-    override fun answer2(): Any {
+    override fun answer2(): Any? {
         val initialNetwork = buildCoordinatesWithValuesMap(input2).filter {it.value in ".ABCD"}
         val initialState = State(initialNetwork)
-        return initialState()
+        return initialState.runThreaded()
     }
 }
 

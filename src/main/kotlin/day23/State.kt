@@ -3,6 +3,7 @@ package day23
 import common.coordinates.Coordinate
 import common.coordinates.CoordinateWithValue
 import common.dijkstra.Dijkstra
+import common.extensions.mapMultiThreaded
 
 class State(private val allRooms: List<CoordinateWithValue<Char>>){
 
@@ -10,22 +11,29 @@ class State(private val allRooms: List<CoordinateWithValue<Char>>){
         allRooms.firstOrNull { it == node && it.value == EMPTY_ROOM }
     }
 
+    fun runThreaded(): Int? =
+        allMoves().mapMultiThreaded {
+            it.first()?.let { i -> i + it.second }?: Int.MAX_VALUE
+        }.minOrNull()
+
+
     /**
      * Return the energy used in the least-energy solution from this state to fully sorted
      */
-    operator fun invoke(): Int {
+    operator fun invoke(): Int? {
         if (isCompleted()) return 0
         val moves = allMoves()
-        return if (allMoves().isEmpty()) Int.MAX_VALUE - 99999999
+        return if (allMoves().isEmpty()) null
+
         else moves.minOf{
-            it.first() + it.second
-        }
+            it.first()?.let { i -> i + it.second }?: Int.MAX_VALUE
+        }.takeIf { it != Int.MAX_VALUE }
     }
 
     private fun isCompleted() = allRooms.none{ it.value in AMPHIPODS }
 
     private fun allMoves(): List<Pair<State, Int>> =
-        moveableAmphipods().map{ roomWithAmphipod ->
+        movableAmphipods().map{ roomWithAmphipod ->
             val pm = possibleMovesForAmphipod(roomWithAmphipod)
             //If this move moves an amphipod to its target, this will be the only possible move
             if(pm.size == 1 && pm.first() == getTargetFor(roomWithAmphipod))
@@ -41,9 +49,10 @@ class State(private val allRooms: List<CoordinateWithValue<Char>>){
     // Returns a list of all rooms with an amphipod in it
     private fun amphipods() = allRooms.filter { it.value in AMPHIPODS }
 
-    private fun moveableAmphipods() = amphipods().filter{ roomWithAmphipod ->
+    private fun movableAmphipods() = amphipods().filter{ roomWithAmphipod ->
         roomWithAmphipod.fourNeighbors().any { it.isAvailableNeighbor() }
     }
+
 
     private fun Coordinate.isAvailableNeighbor(): Boolean {
         val v = allRooms.firstOrNull { it == this }?.value ?: return false
@@ -52,6 +61,7 @@ class State(private val allRooms: List<CoordinateWithValue<Char>>){
 
     private fun possibleMovesForAmphipod(roomWithAmphipod: CoordinateWithValue<Char>): List<CoordinateWithValue<Char>> {
         //println("Looking at moves for $roomWithAmphipod")
+        @Suppress("UNCHECKED_CAST")
         val allReachableNodes = routeFinder.findAllReachableNodes(roomWithAmphipod).map { it as CoordinateWithValue<Char>}
         //println("found ${allReachableNodes.size} reachable nodes")
         return allReachableNodes.filter { it == getTargetFor(roomWithAmphipod) }
@@ -69,7 +79,7 @@ class State(private val allRooms: List<CoordinateWithValue<Char>>){
      * - it moves and amphipod that is not D and not yet in a free space to a free space
      */
     private fun CoordinateWithValue<Char>.isAllowedMove(from: CoordinateWithValue<Char>): Boolean =
-        this.y > 1 || (this in FREE_SPACES && from.value != 'D' && from !in FREE_SPACES)
+        this.y > 1 || (this in FREE_SPACES && from !in FREE_SPACES && (from.value != 'D' || allRooms.filter { it in CORNER_SPACES}.all{ it.value != EMPTY_ROOM}))
 
 
     /**
@@ -118,6 +128,13 @@ class State(private val allRooms: List<CoordinateWithValue<Char>>){
             Coordinate(4,1),
             Coordinate(6,1),
             Coordinate(8,1),
+            Coordinate(10,1),
+            Coordinate(11,1)
+        )
+
+        private val CORNER_SPACES = listOf(
+            Coordinate(1,1),
+            Coordinate(2,1),
             Coordinate(10,1),
             Coordinate(11,1)
         )
